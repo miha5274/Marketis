@@ -2257,7 +2257,6 @@ input[type="search"] {
     right: 0;
     width: 179px;
     height: 54px;
-    background-image: url("../img/boxlogo-adidas.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -7219,4 +7218,5 @@ input[type="search"] {
     .promo__button-text {
         font-size: 8px;
     }
+    
 }

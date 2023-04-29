@@ -27,7 +27,7 @@
                 <a class="header__link header__link_main header__link_active" href="index.php">Главная страница</a>
               </li>
               <li class="header__item">
-                <a class="header__link" href="catalog.html">Каталог</a>
+                <a class="header__link" href="catalog.php">Каталог</a>
               </li>
               <li class="header__item">
                 <a class="header__link" href="profile.html">Профиль</a>
@@ -73,7 +73,7 @@
             </div>
             <div class="promo__buy">
               <div class="promo__desc">Нажми на кнопку, чтобы перейти ко всем товарам торговой площадки «Marketis»</div>
-              <a class="promo__button" href="catalog.html">
+              <a class="promo__button" href="catalog.php">
                 <div class="promo__button-blur"></div>
                 <div class="promo__button-bg"></div>
                 <div class="promo__button-text">Приступить к покупкам</div>
@@ -177,7 +177,7 @@
           <div class="shoes__wrapper">
             <div class="shoes__top">
               <h2 class="shoes__title">Кроссовки в наличии</h2>
-              <a class="shoes__all" href="catalog.html">Смотреть все</a>
+              <a class="shoes__all" href="catalog.php">Смотреть все</a>
             </div>
             <div class="shoes__grid">
               <div class="shoes__sneaker">
