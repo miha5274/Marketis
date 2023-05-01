@@ -12,6 +12,23 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+
+  <?php
+    // подключаемся к базе данных
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "Marketis";
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    
+
+    // проверка подключения
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+      }
+  ?>
+
     <!-- Header -->
     <header class="header header_mod">
       <div class="container">
@@ -161,7 +178,8 @@
           </div>
         </div>
       </div>
-
+      
+      
       <!-- Catalog -->
       <section class="catalog">
         <div class="container">
@@ -174,51 +192,43 @@
                     <div class="catalog__select">
                       <button class="catalog__button catalog__button_categories catalog__button_select" type="button">Категории</button>
                       <div class="catalog__select-wrapper">
-                        <button class="catalog__select-item" type="button">Lorem</button>
-                        <button class="catalog__select-item" type="button">Lorem</button>
-                        <button class="catalog__select-item" type="button">Lorem</button>
+                        <button class="catalog__select-item" type="button">Кроссовки для бега</button>
+                        <button class="catalog__select-item" type="button">Кеды</button>
+                        <button class="catalog__select-item" type="button">Кроссовки для баскетбола</button>
                       </div>
                     </div>
-                    <button class="catalog__button catalog__button_cheap catalog__button_select" type="button">Дешевле</button>
-                    <button class="catalog__button catalog__button_new catalog__button_select" type="button">Новее</button>
+                    <form>
+                      <button class="catalog__button catalog__button_cheap catalog__button_select"  type="button">Дешевле</button>
+                      <button class="catalog__button catalog__button_new catalog__button_select" type="button">Новее</button>
+                    </form>
                   </div>
-                  <button class="catalog__filter" type="button">Фильтр</button>
+
+                  <script>
+                    function refresh_catalog(){
+                      const sneakers = document.querySelectorAll('.catalog__sneaker');
+                      sneakers.forEach(sneaker => {
+                        sneaker.remove();
+                      });
+                      const button1 =document.querySelectorAll('.catalog__button')
+                      
+                      // если true кнопка активна(нужно для сортировки)
+                      console.log(button1[1].classList.contains('catalog__button_active'));
+                    }
+                  </script>
+
+                  <button class="catalog__filter" onclick=refresh_catalog() type="button">Фильтр</button>
                 </div>
-              </div>
-              <div class="catalog__filters-items catalog__filter-items-bottom">
-                <div class="catalog__select">
-                  <button class="catalog__button catalog__button_categories catalog__button_select" type="button">Категории</button>
-                  <div class="catalog__select-wrapper">
-                    <button class="catalog__select-item" type="button">Lorem</button>
-                    <button class="catalog__select-item" type="button">Lorem</button>
-                    <button class="catalog__select-item" type="button">Lorem</button>
-                  </div>
-                </div>
-                <button class="catalog__button catalog__button_cheap catalog__button_select" type="button">Дешевле</button>
-                <button class="catalog__button catalog__button_new catalog__button_select" type="button">Новее</button>
               </div>
             </div>
             <div class="catalog__grid">
               <!--PRODUCT START-->
               <?php
-              // подключаемся к базе данных
-              $servername = "localhost";
-              $username = "root";
-              $password = "";
-              $dbname = "Marketis";
-              $conn = new mysqli($servername, $username, $password, $dbname);
-
-              
-
-              // проверка подключения
-              if ($conn->connect_error) {
-                  die("Connection failed: " . $conn->connect_error);
-                }
 
                 // выборка всех продуктов из таблицы products
                 $sql = "SELECT products.*, logo.image_logo, logo.box_logo
-                        FROM products
-                        INNER JOIN logo ON products.brand = logo.name";
+                FROM products
+                INNER JOIN logo ON products.brand = logo.name
+                -- ORDER BY " . ($sort === 'cheap' ? 'price ASC' : 'created_at DESC');
                 $product = $conn->query($sql);
 
                 // обработка результатов выборки
@@ -267,6 +277,7 @@
               // закрытие соединения с базой данных
               $conn->close();
               ?>
+
               <!--PRODUCT END-->
             </div>
             <button class="catalog__more" type="button">Загрузить больше</button>

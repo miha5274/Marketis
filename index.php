@@ -73,7 +73,7 @@
             </div>
             <div class="promo__buy">
               <div class="promo__desc">Нажми на кнопку, чтобы перейти ко всем товарам торговой площадки «Marketis»</div>
-              <a class="promo__button" href="catalog.php">
+              <a class="promo__button" href="catalog.html">
                 <div class="promo__button-blur"></div>
                 <div class="promo__button-bg"></div>
                 <div class="promo__button-text">Приступить к покупкам</div>
