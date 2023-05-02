@@ -115,14 +115,14 @@
                     <div class="profile__exit-desc profile__descr">
                       Ты выйдешь из аккаунта во всех веб-браузерах, через которые был выполнен вход на сайт marketis.
                     </div>
-                    <button class="profile__exit-button profile__button" type="button">
-                      <span>ВЫЙТИ ИЗ АККАУНТА</span>
-                      <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M15.4679 5.45962C15.7218 5.20578 15.7218 4.79422 15.4679 4.54038L11.3313 0.403806C11.0775 0.149965 10.6659 0.149965 10.4121 0.403806C10.1583 0.657647 10.1583 1.0692 10.4121 1.32304L14.0891 5L10.4121 8.67696C10.1583 8.9308 10.1583 9.34235 10.4121 9.59619C10.6659 9.85003 11.0775 9.85003 11.3313 9.59619L15.4679 5.45962ZM15.0083 4.35H-3.05176e-05V5.65H15.0083V4.35Z"
-                          fill="white" />
-                      </svg>
-                    </button>
+                    <form action="logout.php" method="post">
+                      <button class="profile__exit-button profile__button" type="submit">
+                        <span>ВЫЙТИ ИЗ АККАУНТА</span>
+                        <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M15.4679 5.45962C15.7218 5.20578 15.7218 4.79422 15.4679 4.54038L11.3313 0.403806C11.0775 0.149965 10.6659 0.149965 10.4121 0.403806C10.1583 0.657647 10.1583 1.0692 10.4121 1.32304L14.0891 5L10.4121 8.67696C10.1583 8.9308 10.1583 9.34235 10.4121 9.59619C10.6659 9.85003 11.0775 9.85003 11.3313 9.59619L15.4679 5.45962ZM15.0083 4.35H-3.05176e-05V5.65H15.0083V4.35Z" fill="white" />
+                        </svg>
+                      </button>
+                    </form>
                   </div>
                   <div class="profile__exit">
                     <div class="profile__exit-name profile__title">УДАЛЕНИЕ ПРОФИЛЯ</div>

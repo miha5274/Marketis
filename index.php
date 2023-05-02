@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <?php                  
+    session_start(); 
+    ?>
     <!-- Header -->
     <header class="header">
       <div class="container">
@@ -30,7 +33,14 @@
                 <a class="header__link" href="catalog.php">Каталог</a>
               </li>
               <li class="header__item">
-                <a class="header__link" href="profile.html">Профиль</a>
+                <!-- Если пользователь не авторизован не показывается кнопка профиль -->
+              <?php
+                  if (isset($_SESSION['username'])) : ?>
+                  <a class="header__link" href="profile.php">Профиль</a>
+              <?php else : ?>
+                  <a class="header__link open-popup" >Логин</span>
+              <?php endif; 
+              ?>
               </li>
             </ul>
             <button class="header__close-burger">
@@ -73,7 +83,7 @@
             </div>
             <div class="promo__buy">
               <div class="promo__desc">Нажми на кнопку, чтобы перейти ко всем товарам торговой площадки «Marketis»</div>
-              <a class="promo__button" href="catalog.html">
+              <a class="promo__button" href="catalog.php">
                 <div class="promo__button-blur"></div>
                 <div class="promo__button-bg"></div>
                 <div class="promo__button-text">Приступить к покупкам</div>
@@ -391,9 +401,9 @@
             </a>
           </div>
           <div class="popup__help">или используйте электронную почту для регистрации</div>
-          <form class="popup__form">
+          <form class="popup__form" method="post" action="register.php">
             <div class="popup__placeholder popup__placeholder_name">
-              <input class="popup__input" name="name" type="text" placeholder="Имя" />
+              <input class="popup__input" name="username" type="text" placeholder="Имя" />
             </div>
             <div class="popup__placeholder popup__placeholder_email">
               <input class="popup__input" name="email" type="email" placeholder="Почта" />
@@ -408,6 +418,7 @@
 
           <button class="popup__question login-button" type="button">Есть аккаунт?</button>
         </div>
+
         <img class="close-popup" src="icons/close-neon.svg" alt="" />
       </div>
 
@@ -445,13 +456,13 @@
               </div>
             </a>
           </div>
-          <div class="popup__help">или используйте электронную почту для регистрации</div>
-          <form class="popup__form" action="#!">
+          <div class="popup__help">или используйте электронную почту для входа</div>
+          <form class="popup__form" action="login.php" method="POST">
             <div class="popup__placeholder popup__placeholder_email">
-              <input class="popup__input" name="email" type="email" placeholder="Почта" />
+              <input class="popup__input" name="email" type="email" placeholder="Почта" required />
             </div>
             <div class="popup__placeholder popup__placeholder_password">
-              <input class="popup__input" name="password" type="password" placeholder="Пароль" />
+              <input class="popup__input" name="password" type="password" placeholder="Пароль" required />
             </div>
             <button class="popup__submit" type="submit">
               <span class="popup__submit-bg">Войти</span>

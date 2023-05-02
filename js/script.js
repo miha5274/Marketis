@@ -82,8 +82,8 @@ try {
 try {
     loginButton.forEach((e) => {
         e.addEventListener('click', () => {
-            popupRegister.classList.remove('active');
             popupLogin.classList.add('active');
+            popupRegister.classList.remove('active');
         });
     })
 } catch { }

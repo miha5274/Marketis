@@ -14,6 +14,7 @@
   <body>
 
   <?php
+    session_start();
     // подключаемся к базе данных
     $servername = "localhost";
     $username = "root";
@@ -52,12 +53,17 @@
                   <input class="header__input" type="search" placeholder="Поиск..." />
                 </div>
                 <a class="header__link header__link_basket" href="basket.html">Корзина</a>
-                <a class="header__profile open-popup" href="#!">
-                  <span class="header__link header__link_profile">Профиль</span>
-                  <div class="header__avatar">
-                    <img class="header__img" src="img/profile.png" alt="" />
-                  </div>
-                </a>
+                <?php
+                  if (isset($_SESSION['username'])) : ?>
+                    <a class="header__profile" href="profile.php">
+                        <span class="header__link header__link_profile">Профиль</span>
+                        <div class="header__avatar">
+                            <img class="header__img" src="img/profile.png" alt="" />
+                        </div>
+                    </a>
+                <?php else : ?>
+                    <a class="header__link open-popup">Логин</a>
+                <?php endif; ?>
                 <button class="header__close-right">
                   <span class="visually-hidden">Закрыть меню</span>
                   <img src="icons/close-neon.svg" width="27" height="27" alt="" />
@@ -386,9 +392,9 @@
             </a>
           </div>
           <div class="popup__help">или используйте электронную почту для регистрации</div>
-          <form class="popup__form" action="#!">
+          <form class="popup__form" method="post" action="register.php">
             <div class="popup__placeholder popup__placeholder_name">
-              <input class="popup__input" name="name" type="text" placeholder="Имя" />
+              <input class="popup__input" name="username" type="text" placeholder="Имя" />
             </div>
             <div class="popup__placeholder popup__placeholder_email">
               <input class="popup__input" name="email" type="email" placeholder="Почта" />
@@ -400,8 +406,10 @@
               <span class="popup__submit-bg">Зарегистроваться</span>
             </button>
           </form>
+
           <button class="popup__question login-button" type="button">Есть аккаунт?</button>
         </div>
+
         <img class="close-popup" src="icons/close-neon.svg" alt="" />
       </div>
 
@@ -439,13 +447,13 @@
               </div>
             </a>
           </div>
-          <div class="popup__help">или используйте электронную почту для регистрации</div>
-          <form class="popup__form" action="#!">
+          <div class="popup__help">или используйте электронную почту для входа</div>
+          <form class="popup__form" action="login.php" method="POST">
             <div class="popup__placeholder popup__placeholder_email">
-              <input class="popup__input" name="email" type="email" placeholder="Почта" />
+              <input class="popup__input" name="email" type="email" placeholder="Почта" required />
             </div>
             <div class="popup__placeholder popup__placeholder_password">
-              <input class="popup__input" name="password" type="password" placeholder="Пароль" />
+              <input class="popup__input" name="password" type="password" placeholder="Пароль" required />
             </div>
             <button class="popup__submit" type="submit">
               <span class="popup__submit-bg">Войти</span>
