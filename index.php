@@ -221,7 +221,7 @@
                   </div>
                   <div class="shoes__desc-bottom">
                     <div class="shoes__desc-deadline">Заканчивается 01.04.2022</div>
-                    <a class="shoes__desc-bid" href="product.html">Buy</a>
+                    <a class="shoes__desc-bid" href="product.php">Buy</a>
                   </div>
                 </div>
               </div>
@@ -256,7 +256,7 @@
                   </div>
                   <div class="shoes__desc-bottom">
                     <div class="shoes__desc-deadline">Заканчивается 28.04.2022</div>
-                    <a class="shoes__desc-bid" href="product.html">Buy</a>
+                    <a class="shoes__desc-bid" href="product.php">Buy</a>
                   </div>
                 </div>
               </div>
@@ -291,7 +291,7 @@
                   </div>
                   <div class="shoes__desc-bottom">
                     <div class="shoes__desc-deadline">Заканчивается 28.05.2022</div>
-                    <a class="shoes__desc-bid" href="product.html">Buy</a>
+                    <a class="shoes__desc-bid" href="product.php">Buy</a>
                   </div>
                 </div>
               </div>

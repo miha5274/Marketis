@@ -34,7 +34,7 @@
                 <div class="header__search">
                   <input class="header__input" type="search" placeholder="Поиск..." />
                 </div>
-                <a class="header__link header__link_basket" href="basket.html">Корзина</a>
+                <a class="header__link header__link_basket" href="basket.php">Корзина</a>
                 <a class="header__profile open-popup" href="#!">
                   <span class="header__link header__link_active header__link_profile">Профиль</span>
                   <div class="header__avatar">
