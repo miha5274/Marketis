@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Air Jordan 1 Mid Purple</title>
     <link rel="shortcut icon" href="./img/lightning.png" type="image/x-icon">
     <!-- CSS -->
     <link rel="stylesheet" href="css/fonts.css" />
@@ -12,6 +11,9 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <?php 
+    session_start()
+    ?>
     <!-- Header -->
     <header class="header header_mod">
       <div class="container">
@@ -34,14 +36,19 @@
                 <div class="header__search">
                   <input class="header__input" type="search" placeholder="Поиск..." />
                 </div>
-                <a class="header__link header__link_basket" href="basket.html">Корзина</a>
-                <a class="header__profile open-popup" href="#!">
-                  <span class="header__link header__link_profile">Профиль</span>
-                  <div class="header__avatar">
-                    <img class="header__img" src="img/profile.png" alt="" />
-                  </div>
-                </a>
-                <button class="header__close-right">
+                <a class="header__link header__link_basket" href="basket.php">Корзина</a>
+                <?php
+                  if (isset($_SESSION['username'])) : ?>
+                    <a class="header__profile" href="profile.php">
+                        <span class="header__link header__link_profile">Профиль</span>
+                        <div class="header__avatar">
+                            <img class="header__img" src="img/profile.png" alt="" />
+                        </div>
+                    </a>
+                <?php else : ?>
+                    <a class="header__link open-popup">Логин</a>
+                <?php endif; ?>               
+                 <button class="header__close-right">
                   <span class="visually-hidden">Закрыть меню</span>
                   <img src="icons/close-neon.svg" width="27" height="27" alt="" />
                 </button>
@@ -81,17 +88,21 @@
             <div class="sneaker__left">
               <div class="sneaker__pink"></div>
               <div class="sneaker__blue"></div>
+              <script>
+                const urlParams = new URLSearchParams(window.location.search);
+                const name = urlParams.get('name');
+                document.title = name;
+                var url = decodeURIComponent('get_product.php?name='+name);
+                fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                  const sneakerItem = document.querySelector('.sneaker__item');
+                  sneakerItem.innerHTML = data;
+                })
+                .catch(error => console.error(error));
+              </script>
               <div class="sneaker__item">
-                <div class="sneaker__shoe-inner">
-                  <img class="sneaker__shoe" width="700" height="700" src="img/nike-aj1.png" alt="Nike Air Jordan 1" />
-                </div>
-                <img class="sneaker__line" width="568" height="69" src="icons/line.svg" alt="Линия" />
-                <div class="sneaker__name">
-                  <div class="sneaker__logo">
-                    <img src="icons/logo-jordan.svg" width="50" height="46" alt="Логотип Air Jordan" />
-                  </div>
-                  <h2 class="sneaker__title">AIR JORDAN 1 MID PURPLE</h2>
-                </div>
+                
               </div>
             </div>
             <div class="sneaker__right">
@@ -185,7 +196,16 @@
                   </div>
                 </div>
               </div>
-              <button class="sneaker__button" type="button">ДОБАВИТЬ</button>
+              <button class="sneaker__button" onclick="addToCart(document.title)" type="button">ДОБАВИТЬ</button>
+              <script>
+                  // Добавление товара в корзину
+              function addToCart(name) {
+                alert('Товар успешно добавлен в корзину');
+                let cart = JSON.parse(localStorage.getItem('cart')) || {};
+                cart[name] = (cart[name] || 0) + 1;
+                localStorage.setItem('cart', JSON.stringify(cart));
+              }
+              </script>
               <div class="sneaker__bottom">
                 <div class="sneaker__box">
                   <div class="sneaker__box-bg">

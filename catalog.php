@@ -52,7 +52,7 @@
                 <div class="header__search">
                   <input class="header__input" type="search" placeholder="Поиск..." />
                 </div>
-                <a class="header__link header__link_basket" href="basket.html">Корзина</a>
+                <a class="header__link header__link_basket" href="basket.php">Корзина</a>
                 <?php
                   if (isset($_SESSION['username'])) : ?>
                     <a class="header__profile" href="profile.php">
@@ -118,7 +118,7 @@
               </div>
               <div class="product__like">
                 <div class="product__desc">Понравился товар?<br />Добавьте его в вашу корзину прямо сейчас!</div>
-                <a class="product__button" href="basket.html">
+                <a class="product__button" href="basket.php">
                   <div class="product__button-blur"></div>
                   <div class="product__button-bg"></div>
                   <div class="product__button-text">Перейти в корзину</div>
@@ -157,7 +157,7 @@
               </div>
               <div class="product__like">
                 <div class="product__desc">Понравился товар?<br />Добавьте его в вашу корзину прямо сейчас!</div>
-                <a class="product__button" href="basket.html">
+                <a class="product__button" href="basket.php">
                   <div class="product__button-blur"></div>
                   <div class="product__button-bg"></div>
                   <div class="product__button-text">Перейти в корзину</div>
@@ -211,14 +211,32 @@
 
                   <script>
                     function refresh_catalog(){
-                      const sneakers = document.querySelectorAll('.catalog__sneaker');
-                      sneakers.forEach(sneaker => {
-                        sneaker.remove();
-                      });
-                      const button1 =document.querySelectorAll('.catalog__button')
-                      
-                      // если true кнопка активна(нужно для сортировки)
-                      console.log(button1[1].classList.contains('catalog__button_active'));
+                    const sneakers = document.querySelectorAll('.catalog__sneaker');
+                    sneakers.forEach(sneaker => {
+                      sneaker.remove();
+                    });
+                    const button1 =document.querySelectorAll('.catalog__button');
+                    console.log(button1);
+                    // Получаем данные для запроса
+                    const sort = button1[1].classList.contains('catalog__button_active') ? 'expensive' : 'cheap';
+                    const is_new = button1[2].classList.contains('catalog__button_active') ? 'new' : 'old';
+                    
+                    // const category = document.querySelector('.catalog__dropdown-value').innerText;
+
+                    // Отправляем запрос на сервер
+                    fetch('sort.php', {
+                      method: 'POST',
+                      body: JSON.stringify({
+                        price: sort,
+                        new: is_new
+                      })
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                      const catalog = document.querySelector('.catalog__grid');
+                      catalog.insertAdjacentHTML('beforeend', data);
+                    })
+                    .catch(error => console.error(error));
                     }
                   </script>
 
@@ -228,62 +246,18 @@
             </div>
             <div class="catalog__grid">
               <!--PRODUCT START-->
-              <?php
-
-                // выборка всех продуктов из таблицы products
-                $sql = "SELECT products.*, logo.image_logo, logo.box_logo
-                FROM products
-                INNER JOIN logo ON products.brand = logo.name
-                -- ORDER BY " . ($sort === 'cheap' ? 'price ASC' : 'created_at DESC');
-                $product = $conn->query($sql);
-
-                // обработка результатов выборки
-                if ($product->num_rows > 0) {
-                  // Вывод каждой строки результата в HTML-коде
-                while ($row = mysqli_fetch_assoc($product)) {
-                  echo '<div class="catalog__sneaker">
-                            <div class="catalog__inner">
-                              <div class="catalog__item">
-                                <div class="catalog__item-wrapper">
-                                  <div class="catalog__shoe">
-                                    <div class="catalog__shoe-name">' . $row['brand'] . '<br>' . $row['model'] . '</div>
-                                    <div class="catalog__shoe-img-inner">
-                                      <img class="catalog__shoe-img" width="351" height="236" src="data:image/png;base64,' . base64_encode($row['image']) . '" alt="' . $row['model'] . '">
-                                    </div>
-                                    <div class="catalog__brand" style="background-image:url(data:image/png;base64,' . base64_encode($row['box_logo']) .'")>
-                                    <div class="catalog__brand-name">' . $row['brand'] . '</div>
-                                    </div>
-
-                                  </div>
-                                  <div class="catalog__info">
-                                    <div class="catalog__info-left">
-                                      <img class="catalog__info-img"  src="data:image/png;base64, ' . base64_encode($row['image_logo']) . '" alt="' . $row['brand'] . '">
-                                    </div>
-                                    <div class="catalog__info-right">' . $row['brand'] . " " . $row['name'] . '</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="catalog__desc">
-                              <div class="catalog__desc-top">
-                                <div class="catalog__desc-name">' . $row['brand'] . " " . $row['name'] . '</div>
-                                <div class="catalog__desc-price">' . $row['price']  . '$</div>
-                              </div>
-                              <div class="catalog__desc-bottom">
-                                <div class="catalog__desc-delivery">' . 'Бесплатная доставка' . '</div>
-                                <a class="catalog__desc-bid" href="product.html">Buy</a>
-                              </div>
-                            </div>
-                          </div>';
-                            }
-                } else {
-                echo "0 results";
-              }
-
-              // закрытие соединения с базой данных
-              $conn->close();
-              ?>
-
+              <script>
+                fetch('get_catalog.php')
+                .then(response => response.text())
+                .then(data => {
+                  const catalog = document.querySelector('.catalog__grid');
+                  catalog.insertAdjacentHTML('beforeend', data);
+                })
+                .catch(error => {
+                  // обработка ошибок
+                  console.error(error);
+                });
+              </script>
               <!--PRODUCT END-->
             </div>
             <button class="catalog__more" type="button">Загрузить больше</button>
