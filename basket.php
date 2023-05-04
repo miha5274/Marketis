@@ -35,12 +35,18 @@
                   <input class="header__input" type="search" placeholder="Поиск..." />
                 </div>
                 <a class="header__link header__link_basket" href="basket.php">Корзина</a>
-                <a class="header__profile open-popup" href="#!">
-                  <span class="header__link header__link_profile">Профиль</span>
-                  <div class="header__avatar">
-                    <img class="header__img" src="img/profile.png" alt="" />
-                  </div>
-                </a>
+                <?php
+                session_start();
+                  if (isset($_SESSION['username'])) : ?>
+                    <a class="header__profile" href="profile.php">
+                        <span class="header__link header__link_profile">Профиль</span>
+                        <div class="header__avatar">
+                            <img class="header__img" src="img/profile.png" alt="" />
+                        </div>
+                    </a>
+                <?php else : ?>
+                    <a class="header__link open-popup">Логин</a>
+                <?php endif; ?>
                 <button class="header__close-right">
                   <span class="visually-hidden">Закрыть меню</span>
                   <img src="icons/close-neon.svg" width="27" height="27" alt="" />
@@ -76,41 +82,66 @@
         <div class="basket">
           <div class="basket__left">
               <script>
-                function getCartContent() {
-                    let data = JSON.parse(localStorage.getItem('cart'));
-                    if (!data) {
-                      return;
+                  const cart = JSON.parse(localStorage.getItem('cart'));
+                  // Получение списка продуктов из get_basket.php с передачей массива
+                  fetch('get_basket.php', {
+                    method: 'POST',
+                    body: JSON.stringify(cart),
+                    headers: {
+                      'Content-Type': 'application/json'
                     }
-                    let keys = Object.keys(data);
-                    let values = Object.values(data);
-                    console.log(keys); // ["Миша", "Вася", "Boost 700 V3 Azael"]
-                    console.log(values); // [25, 17, 27]
-                  }
-                getCartContent();
-                // const urlParams = new URLSearchParams(window.location.search);
-                // const name = urlParams.get('name');
-                // document.title = name;
-                // var url = decodeURIComponent('get_product.php?name='+name);
-                // fetch(url)
-                // .then(response => response.text())
-                // .then(data => {
-                //   const sneakerItem = document.querySelector('.sneaker__item');
-                //   sneakerItem.innerHTML = data;
-                // })
-                // .catch(error => console.error(error));
+                  })
+                  .then(response => response.text())
+                  .then(data => {
+                    const catalog = document.querySelector('.basket__left');
+                    catalog.insertAdjacentHTML('beforeend', data);
+                  })
+                  .catch(error => {
+                    console.error(error);
+                  });
               </script>
-          <div class="basket__right">
-            <a class="basket__order basket__link" href="order.html">
-              <span>ОФОРМЛЕНИЕ ЗАКАЗА</span>
-              <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M15.4679 5.45962C15.7218 5.20578 15.7218 4.79422 15.4679 4.54038L11.3313 0.403806C11.0775 0.149965 10.6659 0.149965 10.4121 0.403806C10.1583 0.657647 10.1583 1.0692 10.4121 1.32304L14.0891 5L10.4121 8.67696C10.1583 8.9308 10.1583 9.34235 10.4121 9.59619C10.6659 9.85003 11.0775 9.85003 11.3313 9.59619L15.4679 5.45962ZM15.0083 4.35H-3.05176e-05V5.65H15.0083V4.35Z"
-                  fill="white" />
-              </svg>
-            </a>
-            <div class="basket__miss basket__text">Потерял свой заказ?</div>
-            <a class="basket__track" href="#!">ОТСЛЕЖИВАНИЕ ЗАКАЗА</a>
-          </div>
+            </div>
+            <div class="basket__right">
+              <div class="order__top">
+                <div class="order__left">
+                  <form class="order__form" style="display: none;">
+                    <div class="order__placeholder order__placeholder_name">
+                      <input class="order__input" name="name" type="text" placeholder="Имя" />
+                    </div>
+                    <div class="order__placeholder order__placeholder_adress">
+                      <input class="order__input" name="adress" type="text" placeholder="Адрес" />
+                    </div>
+                    <div class="order__placeholder order__placeholder_tel">
+                      <input class="order__input" name="tel" type="tel" placeholder="Номер телефона" />
+                    </div>
+                    <div class="order__button-container">
+                      <button id="order2" class="order__button basket__link basket__order" type="submit">
+                      <span>Оплатить</span>
+                        <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M15.4679 5.45962C15.7218 5.20578 15.7218 4.79422 15.4679 4.54038L11.3313 0.403806C11.0775 0.149965 10.6659 0.149965 10.4121 0.403806C10.1583 0.657647 10.1583 1.0692 10.4121 1.32304L14.0891 5L10.4121 8.67696C10.1583 8.9308 10.1583 9.34235 10.4121 9.59619C10.6659 9.85003 11.0775 9.85003 11.3313 9.59619L15.4679 5.45962ZM15.0083 4.35H-3.05176e-05V5.65H15.0083V4.35Z"
+                            fill="white" />
+                        </svg>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div class="order__right" style="display:none;">
+                      <div class="order__to-pay">К ОПЛАТЕ:</div>
+                      <div class="order__price"></div>
+                </div>
+              </div>
+              <div class="order__bottom">
+                <button id="order1"class="basket__order basket__link">
+                  <span>ОФОРМЛЕНИЕ ЗАКАЗА</span>
+                  <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.4679 5.45962C15.7218 5.20578 15.7218 4.79422 15.4679 4.54038L11.3313 0.403806C11.0775 0.149965 10.6659 0.149965 10.4121 0.403806C10.1583 0.657647 10.1583 1.0692 10.4121 1.32304L14.0891 5L10.4121 8.67696C10.1583 8.9308 10.1583 9.34235 10.4121 9.59619C10.6659 9.85003 11.0775 9.85003 11.3313 9.59619L15.4679 5.45962ZM15.0083 4.35H-3.05176e-05V5.65H15.0083V4.35Z" fill="white" />
+                  </svg>
+                </button>
+                <div class="basket__miss basket__text">Потерял свой заказ?</div>
+                <a class="basket__track" href="#!">ОТСЛЕЖИВАНИЕ ЗАКАЗА</a>
+              </div>
+
         </div>
       </div>
     </main>
@@ -289,5 +320,6 @@
 
     <!-- JS -->
     <script src="js/script.js"></script>
+    <script src="js/order.js"></script>
   </body>
 </html>

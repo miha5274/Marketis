@@ -190,113 +190,19 @@
               <a class="shoes__all" href="catalog.php">Смотреть все</a>
             </div>
             <div class="shoes__grid">
-              <div class="shoes__sneaker">
-                <div class="shoes__inner">
-                  <div class="shoes__pink"></div>
-                  <div class="shoes__blue"></div>
-                  <div class="shoes__item">
-                    <div class="shoes__item-wrapper">
-                      <div class="shoes__shoe">
-                        <div class="shoes__shoe-name">NEW<br />BALANCE</div>
-                        <div class="shoes__shoe-img-inner">
-                          <img class="shoes__shoe-img" width="336" height="157" src="img/sneaker-nb.png" alt="New Balance" />
-                        </div>
-                        <div class="shoes__brand shoes__brand_nb">
-                          <div class="shoes__brand-name">NEW BALANCE</div>
-                        </div>
-                      </div>
-                      <div class="shoes__info">
-                        <div class="shoes__info-left">
-                          <img class="shoes__info-img" width="112" height="63" src="img/logo-newbalance.png" alt="Логотип New Balance" />
-                        </div>
-                        <div class="shoes__info-right">New Balance 2002R Rain Cloud Protection Pack</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="shoes__desc">
-                  <div class="shoes__desc-top">
-                    <div class="shoes__desc-name">New Balance 2002R Rain Cloud Protection Pack</div>
-                    <div class="shoes__desc-price">200.43$</div>
-                  </div>
-                  <div class="shoes__desc-bottom">
-                    <div class="shoes__desc-deadline">Заканчивается 01.04.2022</div>
-                    <a class="shoes__desc-bid" href="product.php">Buy</a>
-                  </div>
-                </div>
-              </div>
-              <div class="shoes__sneaker">
-                <div class="shoes__inner">
-                  <div class="shoes__pink"></div>
-                  <div class="shoes__blue"></div>
-                  <div class="shoes__item">
-                    <div class="shoes__item-wrapper">
-                      <div class="shoes__shoe">
-                        <div class="shoes__shoe-name">Nike<br />Suprem</div>
-                        <div class="shoes__shoe-img-inner">
-                          <img class="shoes__shoe-img" width="363" height="169" src="img/sneaker-af1.png" alt="Air Force 1 x Supreme" />
-                        </div>
-                        <div class="shoes__brand shoes__brand_supreme">
-                          <div class="shoes__brand-name">NIKE X SUPREME</div>
-                        </div>
-                      </div>
-                      <div class="shoes__info">
-                        <div class="shoes__info-left">
-                          <img class="shoes__info-img" width="116" height="40" src="img/logo-supremexnike.png" alt="Логотип Supreme x Nike" />
-                        </div>
-                        <div class="shoes__info-right">Nike Air Force 1 Low Supreme White</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="shoes__desc">
-                  <div class="shoes__desc-top">
-                    <div class="shoes__desc-name">Nike Air Force 1 Low Supreme White</div>
-                    <div class="shoes__desc-price">193.00$</div>
-                  </div>
-                  <div class="shoes__desc-bottom">
-                    <div class="shoes__desc-deadline">Заканчивается 28.04.2022</div>
-                    <a class="shoes__desc-bid" href="product.php">Buy</a>
-                  </div>
-                </div>
-              </div>
-              <div class="shoes__sneaker">
-                <div class="shoes__inner">
-                  <div class="shoes__pink"></div>
-                  <div class="shoes__blue"></div>
-                  <div class="shoes__item">
-                    <div class="shoes__item-wrapper">
-                      <div class="shoes__shoe">
-                        <div class="shoes__shoe-name">Adidas<br />Yeezy</div>
-                        <div class="shoes__shoe-img-inner">
-                          <img class="shoes__shoe-img" width="363" height="198" src="img/sneaker-yeezy.png" alt="Yezy Boost 350 v2" />
-                        </div>
-                        <div class="shoes__brand shoes__brand_adidas">
-                          <div class="shoes__brand-name">ADIDAS YEEZY</div>
-                        </div>
-                      </div>
-                      <div class="shoes__info">
-                        <div class="shoes__info-left">
-                          <img class="shoes__info-img" width="63" height="73" src="img/logo-yeezy.png" alt="Логотип Yeezy" />
-                        </div>
-                        <div class="shoes__info-right">Adidas Yeezy Boost 350 V2 Clay</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="shoes__desc">
-                  <div class="shoes__desc-top">
-                    <div class="shoes__desc-name">Adidas Yeezy Boost 350 V2 Clay</div>
-                    <div class="shoes__desc-price">279.43$</div>
-                  </div>
-                  <div class="shoes__desc-bottom">
-                    <div class="shoes__desc-deadline">Заканчивается 28.05.2022</div>
-                    <a class="shoes__desc-bid" href="product.php">Buy</a>
-                  </div>
-                </div>
-              </div>
+            <script>
+                fetch('get_index.php')
+                .then(response => response.text())
+                .then(data => {
+                  const catalog = document.querySelector('.shoes__grid');
+                  catalog.insertAdjacentHTML('beforeend', data);
+                })
+                .catch(error => {
+                  // обработка ошибок
+                  console.error(error);
+                });
+              </script>
             </div>
-          </div>
         </div>
       </section>
     </main>
