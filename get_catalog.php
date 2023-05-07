@@ -31,10 +31,10 @@ while ($row = mysqli_fetch_assoc($product)) {
                   <div class="catalog__shoe">
                     <div class="catalog__shoe-name">' . $row['brand'] . '<br>' . $row['model'] . '</div>
                     <div class="catalog__shoe-img-inner">
-                      <img class="catalog__shoe-img" width="351" height="236" src="data:image/png;base64,' . base64_encode($row['image']) . '" alt="' . $row['model'] . '">
+                      <img class="catalog__shoe-img" src="data:image/png;base64,' . base64_encode($row['image']) . '" alt="' . $row['model'] . '">
                     </div>
                     <div class="catalog__brand" style="background-image:url(data:image/png;base64,' . base64_encode($row['box_logo']) .'")>
-                    <div class="catalog__brand-name">' . $row['brand'] . '</div>
+                      <div class="catalog__brand-name">' . $row['brand'] . '</div>
                     </div>
                   </div>
                   <div class="catalog__info">

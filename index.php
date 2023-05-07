@@ -216,9 +216,9 @@
             <div class="footer__left">
               <div class="footer__support">Связь с тех. поддержкой</div>
               <div class="footer__help">Мы всегда вам поможем в любое время!</div>
-              <form class="footer__form">
+              <form class="footer__form" onsubmit="post_email()" method="post">
                 <div class="footer__email">
-                  <input class="footer__input" name="email" type="email" placeholder="Your Email" />
+                  <input class="footer__input" name="email" type="email" placeholder="Your Email" required />
                 </div>
                 <button class="footer__submit" type="submit">
                   <span class="footer__submit-bg">Submit</span>

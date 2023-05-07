@@ -16,27 +16,20 @@ orderButton.addEventListener('click', () => {
 // получаем элементы формы и кнопку
 const form = document.querySelector('.order__form');
 const inputs = form.querySelectorAll('input');
-console.log(inputs);
 form.addEventListener('submit', (event) =>
 {
   event.preventDefault();
 });
-console.log(form);
   const nameInput = inputs[0];
   const addressInput = inputs[1];
   const telInput = inputs[2];
   const payButton = document.getElementById('order2');
 
 
-console.log(payButton);
 // добавляем обработчик клика на кнопку оплаты
 payButton.addEventListener('click', () => {
   // получаем массив товаров из localStorage
   const cart = JSON.parse(localStorage.getItem('cart'));
-  console.log(payButton);
-  console.log(nameInput.value);
-  console.log(addressInput.value);
-  console.log(telInput.value);
 // Создаем объект с данными заказа
 const orderData = {
   name: nameInput.value,
@@ -44,7 +37,6 @@ const orderData = {
   tel: telInput.value,
   cart: cart
 };
-console.log(orderData);
 // Отправляем запрос на сервер
 fetch('process_order.php', {
   method: 'POST',
@@ -70,11 +62,8 @@ fetch('process_order.php', {
 
 });
 
-// Получаем корзину из localstorage
-console.log(cart);
 // Формируем тело запроса
 let data = {cart: cart};
-console.log(data);
 // Отправляем POST запрос на сервер
 fetch('total_price.php', {
   method: 'POST',
@@ -83,7 +72,6 @@ fetch('total_price.php', {
 .then(response => response.json())
 .then(data => {
     let priceElement = document.querySelector('.order__price');
-    console.log(priceElement);
     priceElement.innerText = data.total_price + '$';
 })
 .catch(error => console.error(error));

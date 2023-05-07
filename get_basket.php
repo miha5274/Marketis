@@ -36,6 +36,7 @@ $html = '';
 echo '<div class="basket__name">ТВОИ YEEZY</div>';
 if (!empty($cart)) {
 foreach ($cart as $product => $quantity) {
+  if($quantity == 0) continue;
   // Получение информации о продукте из базы данных
   $sql = "SELECT products.*, logo.image_logo, logo.box_logo, logo.logo_svg
         FROM products 
@@ -46,10 +47,11 @@ foreach ($cart as $product => $quantity) {
             continue;
         }
 
-
+        
 $row = $result->fetch_assoc();
 
 echo '  <div class="basket__sneaker">
+              <div class="name" style="display:none;">'.$row['name'].'</div>
               <div class="basket__info">        
                 <div class="basket__date">'. $date .' | '. $row['price'].'$ | 1 товар</div>
                 <div class="basket__item">
@@ -73,7 +75,7 @@ echo '  <div class="basket__sneaker">
               <div class="basket__details">
                 <div class="basket__price basket__text" id="price">'.$row['price'] * $quantity. '$</div>
                 <div class="basket__size basket__text">36.5 eu</div>
-                <div class="basket__pairs basket__text">'. $quantity .' pair</div>
+                <div class="basket__pairs basket__text">'. $quantity .' pairs</div>
                 <button class="basket__decline" type="button">
                   <span class="visually-hidden">Удалить предмет</span>
                   <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +106,7 @@ echo '  <div class="basket__sneaker">
 }
 }
 else{
-  $html = 'Корзина пустая';
+  $html = '<h2>Корзина пустая<h2>';
 }
 // Возвращение HTML-кода
 echo $html;

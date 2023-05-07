@@ -199,6 +199,7 @@
               <button class="sneaker__button" onclick="addToCart(document.title)" type="button">ДОБАВИТЬ</button>
               <script>
                   // Добавление товара в корзину
+                  console.log(document.querySelector(".sneaker__size_active"));
               function addToCart(name) {
                 alert('Товар успешно добавлен в корзину');
                 let cart = JSON.parse(localStorage.getItem('cart')) || {};

@@ -95,6 +95,28 @@
                   .then(data => {
                     const catalog = document.querySelector('.basket__left');
                     catalog.insertAdjacentHTML('beforeend', data);
+                    const deleteButtons = document.querySelectorAll('.basket__decline');
+                    const pairs = document.querySelectorAll('.basket__pairs');
+                    let count = 0;
+                    document.querySelectorAll('.name').forEach((title, index) => {
+                      deleteButtons[index].addEventListener('click', (event) => {
+                        let cart = JSON.parse(localStorage.getItem('cart')) || {};
+                        if (cart[title.textContent] > 0) {
+                          console.log(cart[title.textContent]);
+                          cart[title.textContent] = cart[title.textContent] - 1;
+                          console.log(cart[title.textContent]);
+                          localStorage.setItem('cart', JSON.stringify(cart));
+                          if (cart[title.textContent] == 1) {
+                            pairs[index].textContent = cart[title.textContent] + ' pair';
+                            console.log(pairs[index].text);
+                          } else {
+                            pairs[index].textContent = cart[title.textContent] + ' pairs';
+                          }
+                          count++;
+                        }
+                      });
+                    });
+
                   })
                   .catch(error => {
                     console.error(error);

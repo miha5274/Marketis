@@ -32,17 +32,17 @@ if ($product->num_rows > 0) {
       <div class="shoes__item">
         <div class="shoes__item-wrapper">
           <div class="shoes__shoe">
-            <div class="shoes__shoe-name">'.$row['brand'] .'</div>
+            <div class="shoes__shoe-name">' . $row['brand'] . '<br>' . $row['name'] . '</div>
             <div class="shoes__shoe-img-inner">
-              <img class="shoes__shoe-img" width="336" height="157" src="data:image/png;base64,'.base64_encode($row['image']). '" alt="'. $row['model'] .'" />
+              <img class="shoes__shoe-img" src="data:image/png;base64,' . base64_encode($row['image']) . '" alt="' . $row['model'] . '">
             </div>
-            <div class="shoes__brand shoes__brand_'. $row['brand'] .'">
+            <div class="shoes__brand" style="background-image:url(data:image/png;base64,' . base64_encode($row['box_logo']) .'")>
               <div class="shoes__brand-name">'.$row['brand'] .'</div>
             </div>
           </div>
           <div class="shoes__info">
             <div class="shoes__info-left">
-              <img class="shoes__info-img" width="112" height="63" src="data:image/png;base64'.base64_encode($row['image_logo']) .'" alt="'.$row['brand'] .'" />
+              <img class="shoes__info-img" src="data:image/png;base64, ' . base64_encode($row['image_logo']) . '" alt="' . $row['brand'] . '">
             </div>
             <div class="shoes__info-right">'.$row['brand'] . ' ' . $row['name'] .'</div>
           </div>
