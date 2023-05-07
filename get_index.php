@@ -32,7 +32,7 @@ if ($product->num_rows > 0) {
       <div class="shoes__item">
         <div class="shoes__item-wrapper">
           <div class="shoes__shoe">
-            <div class="shoes__shoe-name">' . $row['brand'] . '<br>' . $row['name'] . '</div>
+            <div class="shoes__shoe-name">' . $row['brand'] . '</div>
             <div class="shoes__shoe-img-inner">
               <img class="shoes__shoe-img" src="data:image/png;base64,' . base64_encode($row['image']) . '" alt="' . $row['model'] . '">
             </div>
