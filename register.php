@@ -17,24 +17,30 @@
     $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
     // Проверяем, что пользователь с таким именем или email не существует
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
     if ($stmt === false) {
         die("Ошибка в SQL-запросе: " . $conn->error);
     }
     
-    $stmt->bind_param("ss", $username, $email);
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         // Если пользователь уже существует, выводим сообщение об ошибке
-        echo "alert('Пользователь с таким именем или email уже существует');";
+        echo "Пользователь с таким email уже существует";
+        header('Location: index.php');
     } else {
         // Добавляем нового пользователя в базу данных
         $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $username, $email, $password);
         if ($stmt->execute()) {
-            echo "<script>alert('Пользователь успешно зарегистрирован'); window.location.href = 'profile.php';</script>";
+            session_start();
+            $_SESSION['username'] = $username;
+            echo "Пользователь успешно зарегистрирован";
+            header('Location: profile.php');
+            exit;
+
         } else {
             echo "<script>alert('Произошла ошибка при регистрации')</script>";
         }        

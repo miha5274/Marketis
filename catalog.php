@@ -195,14 +195,15 @@
                 <h2 class="catalog__title">Каталог</h2>
                 <div class="catalog__filters">
                   <div class="catalog__filters-items">
-                    <div class="catalog__select">
-                      <button class="catalog__button catalog__button_categories catalog__button_select" type="button">Категории</button>
-                      <div class="catalog__select-wrapper">
-                        <button class="catalog__select-item" type="button">Кроссовки для бега</button>
-                        <button class="catalog__select-item" type="button">Кеды</button>
-                        <button class="catalog__select-item" type="button">Кроссовки для баскетбола</button>
-                      </div>
+                  <div class="catalog__select">
+                    <button class="catalog__button catalog__button_categories catalog__button_select" type="button">Категории</button>
+                    <div class="catalog__select-wrapper">
+                      <button class="catalog__select-item" type="button">Кроссовки для бега</button>
+                      <button class="catalog__select-item" type="button">Кеды</button>
+                      <button class="catalog__select-item" type="button">Кроссовки для баскетбола</button>
                     </div>
+                  </div>
+
                     <form>
                       <button class="catalog__button catalog__button_cheap catalog__button_select"  type="button">Дешевле</button>
                       <button class="catalog__button catalog__button_new catalog__button_select" type="button">Новее</button>

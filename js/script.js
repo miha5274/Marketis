@@ -139,4 +139,19 @@ function post_email() {
       }
     });
   }
+
+  const selectDropdown = document.querySelector('.catalog__select-dropdown');
+
+  selectDropdown.addEventListener('change', function () {
+    const selectedValue = selectDropdown.value;
+    
+    // Perform actions based on the selected value
+    console.log('Selected value:', selectedValue);
+    // Add your logic here to handle the selected value
+    
+    // Reset the select dropdown to its initial state
+    selectDropdown.selectedIndex = 0;
+  });
+
+  
   

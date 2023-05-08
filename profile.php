@@ -10,8 +10,17 @@
     <link rel="stylesheet" href="css/fonts.css" />
     <link rel="stylesheet" href="css/normalize.min.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
+  <?php
+  session_start();
+
+  if (!isset($_SESSION['username'])) { 
+    header("Location: error.html");
+    exit;
+  }
+  ?>
     <!-- Header -->
     <header class="header header_mod">
       <div class="container">
@@ -129,7 +138,22 @@
                     <div class="profile__exit-desc profile__descr">
                       После удаления аккаунта ты больше не будешь участником marketis. Восстановить данные аккаунта невозможно
                     </div>
-                    <button class="profile__exit-button profile__button" type="button">
+                    <script>
+                      function deleteAccount(userName) {
+                        $.ajax({
+                          url: "deleteAccount.php",
+                          method: "POST",
+                          data: { userName: userName },
+                          success: function (data) {
+                            alert(data);
+                          },
+                          error: function (error) {
+                            console.log(error);
+                          }
+                        });
+                      }
+                    </script>
+                    <button class="profile__exit-button profile__button" onclick="deleteAccount('<?=$_SESSION['username']?>')" type="button">
                       <span>УДАЛИТЬ АККАУНТ</span>
                       <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -137,6 +161,25 @@
                           fill="white" />
                       </svg>
                     </button>
+                  </div>
+                  <div class="profile__exit">
+                  <script>
+                    function redirectToAdmin() {
+                      window.location.href = "admin_panel/index.php"; // Replace with the desired URL
+                    }
+                  </script>
+                    <?php
+                      if($_SESSION['username']=='admin') : ?>
+                      <div class="profile__exit-name profile__title">Админ-панель</div>
+                      <button class="profile__exit-button profile__button" onclick="redirectToAdmin()" type="button">
+                      <span>ПЕРЕЙТИ</span>
+                      <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M15.4679 5.45962C15.7218 5.20578 15.7218 4.79422 15.4679 4.54038L11.3313 0.403806C11.0775 0.149965 10.6659 0.149965 10.4121 0.403806C10.1583 0.657647 10.1583 1.0692 10.4121 1.32304L14.0891 5L10.4121 8.67696C10.1583 8.9308 10.1583 9.34235 10.4121 9.59619C10.6659 9.85003 11.0775 9.85003 11.3313 9.59619L15.4679 5.45962ZM15.0083 4.35H-3.05176e-05V5.65H15.0083V4.35Z"
+                          fill="white" />
+                      </svg>
+                      </button>
+                    <?php endif; ?>
                   </div>
                 </div>
               </div>
