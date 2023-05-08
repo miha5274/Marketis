@@ -8,7 +8,6 @@ function showProductItems(){
             $('.allContent-section').html(data);
         }
     });
-    console.log($('form'));
 }
 function addItems(){
         var p_name=$('#name').val();
@@ -44,6 +43,36 @@ function addItems(){
             }
         });
 }
+
+function addLogo(){
+    var p_name=$('#name').val();
+    var image_logo=$('#image_logo')[0].files[0];
+    var box_logo=$('#box_logo')[0].files[0];
+    var logo_svg=$('#logo_svg')[0].files[0];
+    debugger;
+    var fd = new FormData();
+    fd.append('p_name', p_name);
+    fd.append('image_logo', image_logo);
+    fd.append('box_logo', box_logo);
+    fd.append('logo_svg', logo_svg);
+    $.ajax({
+        url:"./controller/addLogoController.php",
+        method:"post",
+        data:fd,
+        processData: false,
+        contentType: false,
+        success: function(data){
+            alert('Logo Added successfully.');
+            $('form').trigger('reset');
+            showLogo();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log("Error submitting form: " + textStatus + " " + errorThrown);
+        }
+    });
+}
+
+
 
 function itemDelete(id){
     $.ajax({

@@ -1,5 +1,5 @@
 <div id="ordersBtn" >
-  <h2>Orders</h2>
+  <h2>Админ Панель - Заказы</h2>
   <table class="table table-striped">
     <thead>
       <tr>

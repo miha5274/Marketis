@@ -12,22 +12,16 @@
     die('Connection failed: ' . $conn->connect_error);
   }
 
-  // Подготовка SQL-запроса для вставки email в таблицу
-  $stmt = $conn->prepare('INSERT INTO subscribed_emails (email) VALUES (?)');
-  $stmt->bind_param('s', $email);
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
 
-  // Выполнение подготовленного запроса
-  if ($stmt->execute()) {
-    // Отправка ответа об успешной обработке
-    echo 'Email received and processed successfully!';
-  } else {
-    // Отправка ответа об ошибке при выполнении запроса
-    http_response_code(500);
-    echo 'Error processing email.';
-  }
+    $sql = "INSERT INTO subscribed_emails (email) VALUES ('$email')";
+    if ($conn->query($sql) === TRUE) {
+        header("Location: index.php");
+    } else {
+        header("Location: error.html");
+    }
 
-  // Закрытие соединения с базой данных
-  $stmt->close();
-  $conn->close();
-
+    $conn->close();
+}
 ?>

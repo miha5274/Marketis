@@ -119,27 +119,6 @@ rightBurger.addEventListener('click', function () {
 closeRight.addEventListener('click', function () {
     navigationRight.classList.remove('header__right_active');
 })
-
-function post_email() {
-    // Получение значения email из поля ввода
-    var email = $('.footer__input').val();
-  
-    // Отправка AJAX-запроса
-    $.ajax({
-      type: 'POST',
-      url: 'email_subscribe.php',
-      data: { email: email },
-      success: function(response) {
-        // Действия после успешной отправки данных
-        console.log('Email sent successfully!');
-      },
-      error: function() {
-        // Действия при возникновении ошибки
-        console.log('Error sending email.');
-      }
-    });
-  }
-
   const selectDropdown = document.querySelector('.catalog__select-dropdown');
 
   selectDropdown.addEventListener('change', function () {

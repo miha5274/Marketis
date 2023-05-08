@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Air Jordan 1 Mid Purple</title>
+    <title>Profile</title>
     <link rel="shortcut icon" href="./img/lightning.png" type="image/x-icon">
     <!-- CSS -->
     <link rel="stylesheet" href="css/fonts.css" />
@@ -100,7 +100,7 @@
                   </div>
                   <div class="profile__data">
                     <div class="profile__data-name profile__title">ДАННЫЕ</div>
-                    <div class="profile__name profile__text">Artur Dippins</div>
+                    <div class="profile__name profile__text"><?=$_SESSION['username']?></div>
                     <div class="profile__birth profile__text">2003-02-18</div>
                     <div class="profile__gender profile__text">Пол</div>
                     <div class="profile__tel profile__text">Мобильный телефон</div>
@@ -110,7 +110,35 @@
                     <div class="profile__login-name profile__title">ДАННЫЕ ДЛЯ ВХОДА</div>
                     <div class="profile__email">
                       <div class="profile__email-name profile__text">Email</div>
-                      <div class="profile__email-text profile__text">arturdippins231@gmail.com</div>
+                      <?php
+                        $servername = 'localhost';
+                        $username = 'root';
+                        $password = '';
+                        $dbname = 'Marketis';
+                      
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+                      
+                        if ($conn->connect_error) {
+                          die('Connection failed: ' . $conn->connect_error);
+                        }
+                        $username = $_SESSION['username'];
+                        
+                        // Query the database to fetch the user's email
+                        $sql = "SELECT email FROM users WHERE username = '$username'";
+                        $result = $conn->query($sql);
+                        $email ="";
+                        if ($result && $result->num_rows > 0) {
+                            $row = $result->fetch_assoc();
+                            $email = $row['email'];
+                            
+                        } else {
+                            $email = 'null';
+                        }
+                        
+                        $conn->close();
+                        
+                        ?>
+                      <div class="profile__email-text profile__text"><?=$email?></div>
                       <button class="profile__email-change profile__change" type="button">РЕДАКТИРОВАТЬ</button>
                     </div>
                     <div class="profile__password">
@@ -185,15 +213,15 @@
               </div>
             </div>
             <div class="profile__right">
-              <div class="profile__hello profile__top">ПРИВЕТ<span class="profile__hello-name">, ARTUR</span></div>
+              <div class="profile__hello profile__top">ПРИВЕТ<span class="profile__hello-name">, <?=$_SESSION['username']?></span></div>
               <div class="profile__box">
                 <div class="profile__avatar-inner">
                   <img class="profile__avatar" src="img/avatar.png" width="205" height="205" alt="Avatar" />
                 </div>
-                <div class="profile__user-name">Artur Dippins</div>
+                <div class="profile__user-name"><?=$_SESSION['username']?></div>
                 <div class="profile__privilege">Нет привилегий</div>
                 <div class="profile__description">Вы можете добавить <span class="profile__yellow">описание</span> вашего профиля.</div>
-                <div class="profile__user-email">arturdippins231@gmail.com</div>
+                <div class="profile__user-email"><?=$email?></div>
                 <div class="profile__socials">
                   <a class="profile__social" href="#!">
                     <span class="visually-hidden">Twitter</span>
@@ -240,9 +268,9 @@
             <div class="footer__left">
               <div class="footer__support">Связь с тех. поддержкой</div>
               <div class="footer__help">Мы всегда вам поможем в любое время!</div>
-              <form class="footer__form">
+              <form class="footer__form" method="post" action="email_subscribe.php">
                 <div class="footer__email">
-                  <input class="footer__input" name="email" type="email" placeholder="Your Email" />
+                  <input class="footer__input" name="email" type="email" placeholder="Your Email" required />
                 </div>
                 <button class="footer__submit" type="submit">
                   <span class="footer__submit-bg">Submit</span>
